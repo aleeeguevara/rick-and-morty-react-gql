@@ -3,10 +3,21 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { ApolloClient, ApolloProvider, InMemoryCache, NormalizedCacheObject } from '@apollo/client';
+ 
+
+//create our cliend application
+const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
+  uri: 'https://rickandmortyapi.com/graphql',
+  cache: new InMemoryCache(), //if we were to query once its going to memorize that query, make that query again is going to hit the cache and not the graphql
+})
+//connect client to react application
 
 ReactDOM.render(
   <React.StrictMode>
+    <ApolloProvider client={client}>
     <App />
+    </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
